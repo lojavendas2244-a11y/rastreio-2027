@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+}
+#loginBox,#painel{
+background:#111;
+padding:30px;
+border-radius:15px;
+width:95%;
+max-width:500px;
+box-shadow:0 0 25px rgba(0,0,0,0.5);
+}
+#painel{display:none}
+input{
+width:100%;
+padding:10px;
+margin-bottom:10px;
+border:none;
+border-radius:8px;
+}
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+margin-top:5px;
+}
+.salvar{background:#00ff99;color:#000}
+.sair{background:#ff4d4d;color:#fff}
+</style>
+</head>
+<body>
+
+<div id="loginBox">
+<h2>Login Admin</h2>
+<input type="password" id="senha" placeholder="Digite a senha">
+<button onclick="login()">Entrar</button>
+</div>
+
+<div id="painel">
+<h2>Painel de Controle</h2>
+
+<input type="text" id="cidade" placeholder="Cidade (ex: Fortaleza - CE)">
+<input type="text" id="status" placeholder="Status">
+<input type="number" id="porcentagem" placeholder="Porcentagem da barra">
+<input type="number" id="rota" placeholder="Em rota">
+<input type="number" id="transito" placeholder="Em trânsito">
+<input type="number" id="entregues" placeholder="Entregues">
+
+<button class="salvar" onclick="salvar()">Salvar Alterações</button>
+<button class="sair" onclick="logout()">Sair</button>
+</div>
+
+<script>
+const senhaCorreta="2358"; // ✅ senha atualizada
+
+function login(){
+if(document.getElementById("senha").value===senhaCorreta){
+document.getElementById("loginBox").style.display="none";
+document.getElementById("painel").style.display="block";
+carregar();
+}else{
+alert("Senha incorreta!");
+}
+}
+
+function salvar(){
+let dados={
+cidade: cidade.value,
+status: status.value,
+porcentagem: porcentagem.value,
+rota: rota.value,
+transito: transito.value,
+entregues: entregues.value
+};
+localStorage.setItem("dadosSite",JSON.stringify(dados));
+alert("Salvo com sucesso!");
+}
+
+function carregar(){
+let dados=JSON.parse(localStorage.getItem("dadosSite"));
+if(dados){
+cidade.value=dados.cidade;
+status.value=dados.status;
+porcentagem.value=dados.porcentagem;
+rota.value=dados.rota;
+transito.value=dados.transito;
+entregues.value=dados.entregues;
+}
+}
+
+function logout(){location.reload();}
+</script>
+
+</body>
+</html>
